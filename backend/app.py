@@ -113,7 +113,7 @@ def logout():
     return jsonify({"success": True})
 
 @app.route('/logout')
-def logout():
+def logout_redirect():
     session.clear()
     return redirect('/')
 
