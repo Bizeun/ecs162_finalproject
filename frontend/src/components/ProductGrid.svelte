@@ -25,9 +25,7 @@
   }
   
   function viewProduct(product: any) {
-    // TODO: Implement ProductDetail component for Week 2
-    alert(`Product Detail page for "${product.title}" will be implemented in Week 2.\n\nThis will include:\n- Detailed product information\n- Community reviews and ratings\n- Review voting system`);
-    // currentProductStore.set(product);
+    currentProductStore.set(product);
   }
   
   function setupInfiniteScroll() {
@@ -121,7 +119,7 @@
           <p class="description">{product.description}</p>
           <div class="product-actions">
             <button class="view-button" on:click={() => viewProduct(product)}>
-              View Details & Reviews
+              View Details & Reviews ({(product.reviews?.length || 0 )+ (product.community_comments_count || 0)})
             </button>
           </div>
         </article>
@@ -148,7 +146,7 @@
           <p class="description">{product.description}</p>
           <div class="product-actions">
             <button class="view-button" on:click={() => viewProduct(product)}>
-              View Reviews ({product.reviews?.length || 0})
+              View Details & Reviews ({(product.reviews?.length || 0 )+ (product.community_comments_count || 0)})
             </button>
           </div>
         </article>
@@ -175,7 +173,7 @@
           <p class="description">{product.description}</p>
           <div class="product-actions">
             <button class="view-button" on:click={() => viewProduct(product)}>
-              View Reviews ({product.reviews?.length || 0})
+              View Details & Reviews ({(product.reviews?.length || 0 )+(product.community_comments_count || 0)})
             </button>
           </div>
         </article>

@@ -6,15 +6,27 @@ import ProductGrid from './components/ProductGrid.svelte';
 import ProductDetail from './components/ProductDetail.svelte';
 import Footer from './components/Footer.svelte';
 import Sidebar from './components/Sidebar.svelte';
+import ModerationPanel from './components/ModeratorPanel.svelte';
 
 let isLoading = true;
 let searchQuery = '';
 let isSidebarOpen = false;
 let viewingProduct = false;
+let viewingModeration = false;
 
 currentProductStore.subscribe(product => {
   viewingProduct = !!product;
 });
+
+function checkCurrentRoute() {
+  const path = window.location.pathname;
+  if (path === '/moderation') {
+    viewingModeration = true;
+    viewingProduct = false;
+  } else {
+    viewingModeration = false;
+  }
+}
 
 const handleSearch = (e: CustomEvent<string>) => {
   const query = e.detail;
@@ -36,9 +48,11 @@ const closeSidebar = () => {
 
 onMount(async () => {
   await checkAuthStatus();
+  checkCurrentRoute();
   await fetchProducts();
   isLoading = false;
   document.title = "Community Product Reviews";
+  window.addEventListener('popstate', checkCurrentRoute);
 });
 </script>
 
@@ -50,18 +64,14 @@ onMount(async () => {
     {#if isLoading}
       <div class="loading">Loading products...</div>
     {:else}
-    <!-- ProductDetail component not yet implemented - showing ProductGrid only -->
-      <ProductGrid searchQuery={searchQuery} />
-      
-      <!-- TODO: Implement conditional rendering for ProductDetail 
-      {#if viewingProduct}
+      {#if viewingModeration}
+        <ModerationPanel />
+      {:else if viewingProduct}
         <ProductDetail />
       {:else}
         <ProductGrid searchQuery={searchQuery} />
       {/if}
-    -->
     {/if}
-    
     <Footer />
   </div>
 </main>
