@@ -203,7 +203,8 @@ function isReviewFlagged(reviewId: string): boolean {
   on:keydown={(e) => e.key === 'Escape' && closeFlagModal()}
 >
   <div 
-    class="modal-content" 
+    class="modal-content"
+    on:click|stopPropagation
   >
     <h4>Flag Review</h4>
     <p>Why are you flagging this review?</p>
